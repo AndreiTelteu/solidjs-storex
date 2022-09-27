@@ -1,19 +1,24 @@
 import { createStore, Store } from 'solid-js/store';
-import { StoreOptions, DefineStoreProps } from './types';
+import { StoreOptions, DefineStoreProps, StoreActionObject } from './types';
 
 const DEFAULT_OPTIONS: StoreOptions = {
   persistent: true,
   storageThrottle: false,
+  storageKey: 'storex-state',
 };
 
-export function defineStore<T extends object = {}>({ state, actions: storeActions }: DefineStoreProps<T>) {
+export function defineStore<T extends object, U extends StoreActionObject>({
+  state = {} as T,
+  actions: storeActions,
+  options = {},
+}: DefineStoreProps<T, U>) {
   // export function defineStore<T extends object = {}>({ state, actions: storeActions, reducer }: DefineStoreProps<T>) {
-  return (options: StoreOptions = {}): [get: Store<T>, actions: any] => {
+  return (): [get: Store<T>, actions: U] => {
     options = { ...DEFAULT_OPTIONS, ...options };
     let initState = state;
     if (options.persistent) {
       try {
-        const stateString: T = JSON.parse(window?.localStorage?.getItem?.('windows-state') || '{}');
+        const stateString: T = JSON.parse(window?.localStorage?.getItem?.(options.storageKey) || '{}');
         if (stateString) initState = { ...initState, ...stateString };
       } catch (e) {}
     }
@@ -21,15 +26,15 @@ export function defineStore<T extends object = {}>({ state, actions: storeAction
     // const [store, setStore] = createStore(initState as Store<T>);
     // const [store, setStore] = createStore<T>(initState);
     const [store, setStore] = createStore(initState);
-    const actions = {};
+    const actions: StoreActionObject = {};
     Object.entries(storeActions(store, setStore)).forEach(([key, action]) => {
       actions[key] = (...attrs) => {
         // reducer(store, action(...attrs), setStore);
-        action(store, attrs, setStore);
+        action(...attrs);
         save(store, options);
       };
     });
-    return [store as T, actions];
+    return [store as T, actions as U];
   };
 }
 
@@ -62,5 +67,5 @@ const save = <T>(state: Store<T>, options: StoreOptions) => {
 };
 
 const saveLocalStorage = <T>(state: Store<T>, options: StoreOptions) => {
-  window?.localStorage?.setItem?.('windows-state', JSON.stringify(state));
+  window?.localStorage?.setItem?.(options.storageKey, JSON.stringify(state));
 };

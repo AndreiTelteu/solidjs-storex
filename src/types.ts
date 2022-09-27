@@ -1,23 +1,33 @@
+import type { Signal } from 'solid-js';
 import type { SetStoreFunction } from 'solid-js/store';
+
+export interface UseStateRef<T> {
+  [key: string | number]: Signal<T>;
+}
 
 export type Store<T> = T;
 
 export interface StoreOptions {
   persistent?: boolean;
+  storageKey?: string;
   storageThrottle?: false | number;
 }
 
 export interface StoreActionFunction {
   (...props: any): void;
 }
-
-export interface StoreActions<T> {
-  (store: T | Store<T>, set: SetStoreFunction<T>): { [key: string]: StoreActionFunction };
+export interface StoreActionObject {
+  [key: string]: StoreActionFunction;
 }
 
-export interface DefineStoreProps<T> {
+export interface StoreActions<T, U> {
+  (store: T | Store<T>, set: SetStoreFunction<T>): U;
+}
+
+export interface DefineStoreProps<T, U extends StoreActionObject> {
   state: T | Store<T>;
-  actions?: StoreActions<T>;
+  actions?: StoreActions<T, U>;
+  options?: StoreOptions;
   // reducer?: StoreReducer<T>;
 }
 // export interface StoreActions {

@@ -1,10 +1,14 @@
-import { defineStore } from '../../../src/defineStore';
+import { defineStore } from '../../../src/index';
 
 export default defineStore({
   state: {
     logged: false,
     user: null,
     token: null,
+  },
+  options: {
+    persistent: true,
+    storageKey: 'solid-app-user',
   },
   actions: (state, set) => ({
     login: (user, token) => {
