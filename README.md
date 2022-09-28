@@ -2,7 +2,7 @@
 
 A simple helper to organize state management actions and default state with createStore.
 
-Demo here: https://codesandbox.io/s/solidjs-redux-like-store-with-localstorage-4y7v6d?file=/src/store/windowStore.jsx
+Demo here: https://codesandbox.io/s/9kofl0?file=/src/App.tsx
 
 This plugin is **not** meant to improve performance or introduce a new state management library. His only purpose is to help organize one or more global createStore's in your app.
 
