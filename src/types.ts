@@ -24,18 +24,19 @@ export interface StoreActions<T, U> {
   (store: T | Store<T>, set: SetStoreFunction<T>): U;
 }
 
-export interface DefineStoreProps<T, U extends StoreActionObject> {
+export interface StoreWatchFunction<T, W> {
+  (value: any, store: T | Store<T>, set: SetStoreFunction<T>): W;
+}
+export interface StoreWatch<T, W> {
+  [key: string]: StoreWatchFunction<T, W>;
+}
+
+export interface DefineStoreProps<T, U extends StoreActionObject, W> {
   state: T | Store<T>;
   actions?: StoreActions<T, U>;
+  watch?: StoreWatch<T, W>;
   options?: StoreOptions;
-  // reducer?: StoreReducer<T>;
 }
-// export interface StoreActions {
-//   [key: string]: StoreActionFunction;
-// }
-// export interface StoreActionFunction {
-//   (...props: any): { type: string; [key: string | number]: any };
-// }
 
 export interface StoreReducer<T> {
   (state: T, action: any, set: SetStoreFunction<T>): void;

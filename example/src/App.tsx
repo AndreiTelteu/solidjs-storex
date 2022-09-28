@@ -1,24 +1,28 @@
-import { JSX, Show } from 'solid-js';
+import { For, JSX, Show } from 'solid-js';
 import { useState } from '../../src/index';
 import userStore from './stores/userStore';
 import positionStore from './stores/positionStore';
+import userActivityStore from './stores/userActivityStore';
 
 export default function App(): JSX.Element {
   const [user, actions] = userStore();
   const [positionState, positionActions] = positionStore();
+  const [userActivityState, { add: addEvent, clear: clearEvents }] = userActivityStore();
   const state = useState({
     username: '',
   });
 
   return (
     <div
-      style="width: 100vw; height: 100vh;"
+      style="width: 100vw; height: 100vh; position: absolute; top: 0; left: 0;"
       onMouseMove={(event) => {
         positionActions.move([event.clientX, event.clientY]);
       }}
     >
       <p>{user.logged ? `Logged in as: ${user.user?.username}` : 'Not logged in'}</p>
-      {JSON.stringify(user)}
+      <p>
+        <b>useState</b> = <code>{JSON.stringify(user)}</code>
+      </p>
       <Show
         when={user.logged == false}
         children={() => (
@@ -34,7 +38,7 @@ export default function App(): JSX.Element {
               onInput={(event) => {
                 state.username = (event.target as HTMLInputElement).value;
               }}
-              required
+              autofocus
             />
             <button type="submit">Login</button>
           </form>
@@ -50,6 +54,9 @@ export default function App(): JSX.Element {
           </div>
         )}
       />
+      <p>
+        <b>positionStore</b> = <code>{JSON.stringify(positionState)}</code>
+      </p>
       <div
         style={{
           position: 'absolute',
@@ -64,6 +71,14 @@ export default function App(): JSX.Element {
           'pointer-events': 'none',
         }}
       />
+      <p>
+        <b>userActivityStore</b> : length = <code>{JSON.stringify(userActivityState.events.length)}</code>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <button type="button" onClick={() => clearEvents()}>
+          Clear
+        </button>
+      </p>
+      <For each={userActivityState.events} children={(item) => <div>{item}</div>} />
     </div>
   );
 }

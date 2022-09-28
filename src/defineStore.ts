@@ -1,3 +1,4 @@
+import { batch, createEffect, createReaction, createRenderEffect, on, untrack } from 'solid-js';
 import { createStore, Store } from 'solid-js/store';
 import { StoreOptions, DefineStoreProps, StoreActionObject } from './types';
 
@@ -7,12 +8,12 @@ const DEFAULT_OPTIONS: StoreOptions = {
   storageKey: 'storex-state',
 };
 
-export function defineStore<T extends object, U extends StoreActionObject>({
+export function defineStore<T extends object, U extends StoreActionObject, W>({
   state = {} as T,
   actions: storeActions,
+  watch = null,
   options = {},
-}: DefineStoreProps<T, U>) {
-  // export function defineStore<T extends object = {}>({ state, actions: storeActions, reducer }: DefineStoreProps<T>) {
+}: DefineStoreProps<T, U, W>) {
   return (): [get: Store<T>, actions: U] => {
     options = { ...DEFAULT_OPTIONS, ...options };
     let initState = state;
@@ -22,18 +23,41 @@ export function defineStore<T extends object, U extends StoreActionObject>({
         if (stateString) initState = { ...initState, ...stateString };
       } catch (e) {}
     }
-    // const [store, setStore] = createStore<T>(initState as Store<T extends object ? any : any>);
-    // const [store, setStore] = createStore(initState as Store<T>);
-    // const [store, setStore] = createStore<T>(initState);
     const [store, setStore] = createStore(initState);
     const actions: StoreActionObject = {};
     Object.entries(storeActions(store, setStore)).forEach(([key, action]) => {
       actions[key] = (...attrs) => {
-        // reducer(store, action(...attrs), setStore);
         action(...attrs);
         save(store, options);
       };
     });
+    if (typeof watch != 'undefined' && watch != null) {
+      try {
+        Object.entries(watch).forEach(([watchKey, effect]) => {
+          const tracked = () => store[watchKey];
+          createRenderEffect(
+            on(tracked, () => {
+              effect(tracked(), store, setStore);
+            }),
+          );
+
+          // other methods to watch on a store
+          // createEffect(() => {
+          //   console.log('state watchhh', store[watchKey]);
+          //   untrack(() => {
+          //     effect(tracked(), store, setStore);
+          //   });
+          // });
+
+          // const track = createReaction(() => {
+          //   console.log('reaction', { watchKey });
+          //   effect(tracked(), store, setStore);
+          // });
+          // track(() => tracked());
+          // track(() => store[watchKey]);
+        });
+      } catch (e) {}
+    }
     return [store as T, actions as U];
   };
 }
