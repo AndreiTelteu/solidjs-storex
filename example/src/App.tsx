@@ -44,6 +44,9 @@ export default function App(): JSX.Element {
             <button type="button" onClick={() => actions.logout()}>
               Logout
             </button>
+            <button type="button" onClick={() => actions.deleteToken()}>
+              Delete token
+            </button>
           </div>
         )}
       />
