@@ -7,6 +7,7 @@ Demo here: https://codesandbox.io/s/9kofl0?file=/src/App.tsx
 This plugin is **not** meant to improve performance or introduce a new state management library. His only purpose is to help organize one or more global createStore's in your app.
 
 ```jsx
+import { defineStore } from 'solidjs-storex';
 export default defineStore({
   state: {
     auth: {
@@ -35,6 +36,7 @@ const [password, setPassword] = createSignal('');
 const [repeatPassword, setRepeatPassword] = createSignal('');
 
 // into this:
+import { useState } from 'solidjs-storex';
 const state = useState({
   username: '',
   firstName: '',
@@ -166,6 +168,11 @@ export default defineStore({
 ```
 
 ## Changelog:
+
+### v1.0.3
+
+- Before this version, each call on the result of `defineStore` did create a new independent `createStore`, with results in different store values on every component. After this update it nows correctly returns the same initiated store.
+- Update dependencies
 
 ### v1.0.2
 

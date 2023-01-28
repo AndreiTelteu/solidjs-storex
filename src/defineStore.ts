@@ -14,7 +14,7 @@ export function defineStore<T extends object, U extends StoreActionObject, W>({
   watch = null,
   options = {},
 }: DefineStoreProps<T, U, W>) {
-  return (): [get: Store<T>, actions: U] => {
+  const initStore = (): [get: Store<T>, actions: U] => {
     options = { ...DEFAULT_OPTIONS, ...options };
     let initState = state;
     if (options.persistent) {
@@ -60,6 +60,8 @@ export function defineStore<T extends object, U extends StoreActionObject, W>({
     }
     return [store as T, actions as U];
   };
+  const storedStore = initStore();
+  return () => storedStore;
 }
 
 let storageTimeout, storageTimeout2;

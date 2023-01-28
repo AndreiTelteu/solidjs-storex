@@ -12,11 +12,14 @@ export default function App(): JSX.Element {
     username: '',
   });
 
+  let mainTarget;
   return (
     <div
-      style="width: 100vw; height: 100vh; position: absolute; top: 0; left: 0;"
+      ref={mainTarget}
+      style="position: relative; margin-bottom: 100px;"
       onMouseMove={(event) => {
-        positionActions.move([event.clientX, event.clientY]);
+        let bounds = mainTarget?.getBoundingClientRect();
+        positionActions.move([event.clientX - bounds?.left, event.clientY - bounds?.top]);
       }}
     >
       <p>{user.logged ? `Logged in as: ${user.user?.username}` : 'Not logged in'}</p>

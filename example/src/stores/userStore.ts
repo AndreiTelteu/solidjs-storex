@@ -57,33 +57,4 @@ export default defineStore({
       );
     },
   }),
-
-  // I tried this pattern. seems to much boilerplate with the type attr and switch
-  // actions: {
-  //   login: (user, token) => ({ type: 'LOGIN', user, token }),
-  //   logout: () => ({ type: 'LOGOUT' }),
-  // },
-  // reducer: (state, action, set) => {
-  //   switch (action.type) {
-  //     case 'LOGIN':
-  //       const { user, token } = action;
-  //       set((state) => ({
-  //         ...state,
-  //         logged: true,
-  //         user,
-  //         token,
-  //       }));
-  //       break;
-  //     case 'LOGOUT':
-  //       set((state) => ({
-  //         ...state,
-  //         logged: false,
-  //         user: null,
-  //         token: null,
-  //       }));
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // },
 });
