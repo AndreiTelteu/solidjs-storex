@@ -26,9 +26,10 @@ export function defineStore<T extends object, U extends StoreActionObject, W>({
     const [store, setStore] = createStore(initState);
     const actions: StoreActionObject = {};
     Object.entries(storeActions(store, setStore)).forEach(([key, action]) => {
-      actions[key] = (...attrs) => {
-        action(...attrs);
+      actions[key] = async (...attrs) => {
+        const actionResult = await Promise.resolve(action(...attrs));
         save(store, options);
+        return actionResult;
       };
     });
     if (typeof watch != 'undefined' && watch != null) {

@@ -25,13 +25,15 @@ export default defineStore({
     },
   },
   actions: (state, set) => ({
-    login: (user, token) => {
+    login: async (username) => {
+      let { user, token } = await fakeLoginApi(username);
       set((state) => ({
         ...state,
         logged: true,
         user,
         token,
       }));
+      return user;
     },
     logout: () => {
       set((state) => ({
@@ -58,3 +60,14 @@ export default defineStore({
     },
   }),
 });
+
+const fakeLoginApi = (username: string): Promise<{ user: { username: string }; token: { accessToken: string } }> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        user: { username },
+        token: { accessToken: 'abcs' },
+      });
+    }, 1000);
+  });
+};

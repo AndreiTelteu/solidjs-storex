@@ -169,6 +169,10 @@ export default defineStore({
 
 ## Changelog:
 
+### v1.0.4
+
+- Added support for async actions
+
 ### v1.0.3
 
 - Before this version, each call on the result of `defineStore` did create a new independent `createStore`, with results in different store values on every component. After this update it now correctly returns the same initiated store.

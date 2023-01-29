@@ -10,6 +10,7 @@ export default function App(): JSX.Element {
   const [userActivityState, { add: addEvent, clear: clearEvents }] = userActivityStore();
   const state = useState({
     username: '',
+    loading: false,
   });
 
   let mainTarget;
@@ -30,10 +31,13 @@ export default function App(): JSX.Element {
         when={user.logged == false}
         children={() => (
           <form
-            onSubmit={(event) => {
+            onSubmit={async (event) => {
               event.preventDefault();
-              actions.login({ username: state.username }, { accessToken: 'abcs' });
+              state.loading = true;
+              const loginRes = await actions.login(state.username);
+              console.log('This is async as well. Welcome:', loginRes.username);
               state.username = '';
+              state.loading = false;
             }}
           >
             <input
@@ -44,6 +48,7 @@ export default function App(): JSX.Element {
               autofocus
             />
             <button type="submit">Login</button>
+            {state.loading && ' - Loading...'}
           </form>
         )}
         fallback={() => (
