@@ -1,5 +1,8 @@
 import { createSignal, Signal } from 'solid-js';
-import { UseStateRef } from './types';
+
+export interface UseStateRef<T> {
+  [key: string | number]: Signal<T>;
+}
 
 export function useState<T>(initialState: T): T {
   const stateRef: UseStateRef<T> = {};

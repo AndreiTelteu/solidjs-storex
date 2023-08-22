@@ -1,4 +1,4 @@
-import { defineStore } from '../../../dist';
+import { defineStore } from 'solidjs-storex';
 
 // this is how you would define custom type for every state if you need
 // this is optional

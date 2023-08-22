@@ -3,7 +3,7 @@ import { createStore, Store } from 'solid-js/store';
 import { StoreOptions, DefineStoreProps, StoreActionObject } from './types';
 
 const DEFAULT_OPTIONS: StoreOptions = {
-  persistent: true,
+  persistent: false,
   storageThrottle: false,
   storageKey: 'storex-state',
 };

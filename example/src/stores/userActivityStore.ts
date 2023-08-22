@@ -1,5 +1,5 @@
 import { produce } from 'solid-js/store';
-import { defineStore } from '../../../dist';
+import { defineStore } from 'solidjs-storex';
 
 export default defineStore({
   state: {

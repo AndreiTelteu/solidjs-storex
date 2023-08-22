@@ -1,6 +1,6 @@
 {
   "name": "solidjs-storex",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A simple helper to organize state management actions and default state with createStore.",
   "license": "MIT",
   "author": "Andrei Telteu",
@@ -18,34 +18,58 @@
   "private": false,
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index/index.cjs",
+  "module": "./dist/index/index.js",
+  "types": "./dist/index/index.d.ts",
   "exports": {
-    "solid": {
-      "development": "./dist/dev.jsx",
-      "import": "./dist/index.jsx"
-    },
-    "development": {
+    ".": {
+      "development": {
+        "import": {
+          "types": "./dist/index/index.d.ts",
+          "default": "./dist/index/dev.js"
+        },
+        "require": {
+          "types": "./dist/index/index.d.cts",
+          "default": "./dist/index/dev.cjs"
+        }
+      },
       "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/dev.js"
+        "types": "./dist/index/index.d.ts",
+        "default": "./dist/index/index.js"
       },
       "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/dev.cjs"
+        "types": "./dist/index/index.d.cts",
+        "default": "./dist/index/index.cjs"
       }
     },
-    "import": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "require": {
-      "types": "./dist/index.d.cts",
-      "default": "./dist/index.cjs"
+    "./state": {
+      "development": {
+        "import": {
+          "types": "./dist/state/index.d.ts",
+          "default": "./dist/state/dev.js"
+        },
+        "require": {
+          "types": "./dist/state/index.d.cts",
+          "default": "./dist/state/dev.cjs"
+        }
+      },
+      "import": {
+        "types": "./dist/state/index.d.ts",
+        "default": "./dist/state/index.js"
+      },
+      "require": {
+        "types": "./dist/state/index.d.cts",
+        "default": "./dist/state/index.cjs"
+      }
     }
   },
-  "typesVersions": {},
+  "typesVersions": {
+    "*": {
+      "state": [
+        "./dist/state/index.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "build": "tsup"
   },

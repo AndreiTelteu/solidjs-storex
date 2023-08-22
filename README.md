@@ -36,7 +36,7 @@ const [password, setPassword] = createSignal('');
 const [repeatPassword, setRepeatPassword] = createSignal('');
 
 // into this:
-import { useState } from 'solidjs-storex';
+import { useState } from 'solidjs-storex/state';
 const state = useState({
   username: '',
   firstName: '',
@@ -64,7 +64,7 @@ yarn add solidjs-storex
 ```tsx
 import { JSX } from 'solid-js';
 import userStore from './stores/userStore';
-import { useState } from 'solidjs-storex';
+import { useState } from 'solidjs-storex/state';
 
 export default function App(): JSX.Element {
   const [user, actions] = userStore();
@@ -168,6 +168,11 @@ export default defineStore({
 ```
 
 ## Changelog:
+
+### v1.0.6
+
+- Store's default persistent setting is now disabled
+- Separate the `useState` helper in a separate file
 
 ### v1.0.5
 

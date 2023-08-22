@@ -1,10 +1,6 @@
 import type { Signal } from 'solid-js';
 import type { SetStoreFunction } from 'solid-js/store';
 
-export interface UseStateRef<T> {
-  [key: string | number]: Signal<T>;
-}
-
 export type Store<T> = T;
 
 export interface StoreOptions {

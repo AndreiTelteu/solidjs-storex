@@ -1,5 +1,5 @@
 import { For, JSX, Show } from 'solid-js';
-import { useState } from '../../dist';
+import { useState } from 'solidjs-storex/state';
 import userStore from './stores/userStore';
 import positionStore from './stores/positionStore';
 import userActivityStore from './stores/userActivityStore';

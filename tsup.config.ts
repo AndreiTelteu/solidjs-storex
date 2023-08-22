@@ -4,7 +4,13 @@ import * as preset from 'tsup-preset-solid';
 const preset_options: preset.PresetOptions = {
   entries: [
     {
-      entry: 'src/index.tsx',
+      name: 'index',
+      entry: 'src/index.ts',
+      dev_entry: true,
+    },
+    {
+      name: 'state',
+      entry: 'src/state/index.ts',
       dev_entry: true,
     },
   ],
@@ -20,17 +26,12 @@ const CI =
 
 export default defineConfig((config) => {
   const watching = !!config.watch;
-
   const parsed_options = preset.parsePresetOptions(preset_options, watching);
-
   if (!watching && !CI) {
     const package_fields = preset.generatePackageExports(parsed_options);
-
     console.log(`package.json: \n\n${JSON.stringify(package_fields, null, 2)}\n\n`);
-
     // will update ./package.json with the correct export fields
     preset.writePackageJson(package_fields);
   }
-
   return preset.generateTsupOptions(parsed_options);
 });

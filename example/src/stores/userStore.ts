@@ -1,4 +1,4 @@
-import { defineStore } from '../../../dist';
+import { defineStore } from 'solidjs-storex';
 import { produce } from 'solid-js/store';
 import userActivityStore from './userActivityStore';
 import { untrack } from 'solid-js';
