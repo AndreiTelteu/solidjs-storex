@@ -1,5 +1,7 @@
 # solidjs-storex
 
+[![bundlejs](https://deno.bundlejs.com/badge?q=solidjs-storex@1.0.6&treeshake=[{+defineStore+}])](https://bundlejs.com/?q=solidjs-storex%401.0.6&treeshake=%5B%7B+defineStore+%7D%5D)
+
 A simple helper to organize state management actions and default state with createStore.
 
 Demo here: https://codesandbox.io/s/9kofl0?file=/src/App.tsx
