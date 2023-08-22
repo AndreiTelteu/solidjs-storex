@@ -47,8 +47,7 @@
   },
   "typesVersions": {},
   "scripts": {
-    "build": "tsup",
-    "prepublishOnly": "npm run build"
+    "build": "tsup"
   },
   "peerDependencies": {
     "solid-js": "^1.*"
