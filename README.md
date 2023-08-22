@@ -169,6 +169,10 @@ export default defineStore({
 
 ## Changelog:
 
+### v1.0.5
+
+- Migrated from rollup to [tsup-preset-solid](https://github.com/solidjs-community/tsup-preset-solid)
+
 ### v1.0.4
 
 - Added support for async actions

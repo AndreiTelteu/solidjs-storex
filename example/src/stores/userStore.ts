@@ -1,4 +1,4 @@
-import { defineStore } from '../../../src/index';
+import { defineStore } from '../../../dist';
 import { produce } from 'solid-js/store';
 import userActivityStore from './userActivityStore';
 import { untrack } from 'solid-js';

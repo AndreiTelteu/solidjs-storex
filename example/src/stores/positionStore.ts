@@ -1,4 +1,4 @@
-import { defineStore } from '../../../src/index';
+import { defineStore } from '../../../dist';
 
 // this is how you would define custom type for every state if you need
 // this is optional

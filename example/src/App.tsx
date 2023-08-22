@@ -1,5 +1,5 @@
 import { For, JSX, Show } from 'solid-js';
-import { useState } from '../../src/index';
+import { useState } from '../../dist';
 import userStore from './stores/userStore';
 import positionStore from './stores/positionStore';
 import userActivityStore from './stores/userActivityStore';
@@ -29,29 +29,7 @@ export default function App(): JSX.Element {
       </p>
       <Show
         when={user.logged == false}
-        children={() => (
-          <form
-            onSubmit={async (event) => {
-              event.preventDefault();
-              state.loading = true;
-              const loginRes = await actions.login(state.username);
-              console.log('This is async as well. Welcome:', loginRes.username);
-              state.username = '';
-              state.loading = false;
-            }}
-          >
-            <input
-              value={state.username}
-              onInput={(event) => {
-                state.username = (event.target as HTMLInputElement).value;
-              }}
-              autofocus
-            />
-            <button type="submit">Login</button>
-            {state.loading && ' - Loading...'}
-          </form>
-        )}
-        fallback={() => (
+        fallback={
           <div>
             <button type="button" onClick={() => actions.logout()}>
               Logout
@@ -60,8 +38,29 @@ export default function App(): JSX.Element {
               Delete token
             </button>
           </div>
-        )}
-      />
+        }
+      >
+        <form
+          onSubmit={async (event) => {
+            event.preventDefault();
+            state.loading = true;
+            const loginRes = await actions.login(state.username);
+            console.log('This is async as well. Welcome:', loginRes.username);
+            state.username = '';
+            state.loading = false;
+          }}
+        >
+          <input
+            value={state.username}
+            onInput={(event) => {
+              state.username = (event.target as HTMLInputElement).value;
+            }}
+            autofocus
+          />
+          <button type="submit">Login</button>
+          {state.loading && ' - Loading...'}
+        </form>
+      </Show>
       <p>
         <b>positionStore</b> = <code>{JSON.stringify(positionState)}</code>
       </p>
